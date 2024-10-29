@@ -15,12 +15,12 @@ export const updateProfile = async (req, res) => {
                     updatedData.image = uploadResponse.secure_url
                 } catch (error) {
                     console.log("Error uploading image: ", error)
-                    return res.status(500).json({message: "Error uploading image"})
+                    return res.status(400).json({message: "Error uploading image"})
                 }
             }
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.user._id, updatedData, {new: true})
+        const updatedUser = await User.findByIdAndUpdate(req.user.id, updatedData, {new: true})
 
         res.status(200).json({
             success: true,

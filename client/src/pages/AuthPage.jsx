@@ -7,7 +7,7 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true)
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gradient-to-t from-indigo-400 via-purple-500 to-pink-400'>
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-t from-indigo-400 via-purple-500 to-pink-500'>
         <div className='w-full max-w-md'>
             <h2 className='text-center text-3xl font-extrabold text-white mb-8 drop-shadow-lg'>
                 {isLogin ? 'Sign in to Swipe' : 'Create a Swipe account'}
