@@ -41,17 +41,35 @@ export const swipeLeft = async (req, res)  => {
     }
 }
 
-export const getMatches = async (req, res)  => {
-    try {
-        const user = User.findById(req.user._id).populate("matches", "username image")
+// export const getMatches = async (req, res)  => {
+//     try {
+//         const user = User.findById(req.user.id).populate("matches", "name image")
 
-        res.status(200).json({success: true, matches: user.matches})
-    } catch (error) {
-        console.log("Error in getMatches controller: ", error)
-        res.status(500).json({message: "Internal server error"})
-    }
+//         res.status(200).json({success: true, matches: user.matches})
+//     } catch (error) {
+//         console.log("Error in getMatches controller: ", error)
+//         res.status(500).json({message: "Internal server error"})
+//     }
    
-}
+// }
+
+export const getMatches = async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id).populate("matches", "name image");
+
+		res.status(200).json({
+			success: true,
+			matches: user.matches,
+		});
+	} catch (error) {
+		console.log("Error in getMatches: ", error);
+
+		res.status(500).json({
+			success: false,
+			message: "Internal server error",
+		});
+	}
+};
 
 export const getUserProfiles = async (req, res)  => {
     try {
