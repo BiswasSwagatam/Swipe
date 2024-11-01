@@ -37,7 +37,7 @@ const ProfilePage = () => {
   console.log(image)
 
   return (
-    <div className='min-h-screen bg-gray-50 flex flex-col'>
+    <div className='min-h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200 flex flex-col'>
 			<Header />
 
 			<div className='flex-grow flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8'>

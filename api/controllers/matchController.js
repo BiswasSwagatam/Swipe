@@ -1,4 +1,5 @@
 import User from "../models/User.js"
+import { getconnectedUsers, getIO } from "../socket/socket.server.js"
 
 
 export const swipeRight = async (req, res) => {
@@ -16,6 +17,30 @@ export const swipeRight = async (req, res) => {
                 currentUser.matches.push(likedUser._id)
                 // save both users
                 await Promise.all([likedUser.save(), currentUser.save()])
+
+                //send notification using socket.io
+                const connectedUsers = getconnectedUsers()
+                const io = getIO()
+
+                const likedUserSocketId = connectedUsers.get(likedUserId)
+
+                if(likedUserSocketId) {
+                    io.to(likedUserSocketId).emit("newMatch", {
+                        _id: currentUser._id,
+                        name: currentUser.name,
+                        image: currentUser.image
+                    })
+                }
+
+                const currentUserSocketId = connectedUsers.get(currentUser._id.toString())
+
+                if(currentUserSocketId) {
+                    io.to(currentUserSocketId).emit("newMatch", {
+                        _id: likedUser._id,
+                        name: likedUser.name,
+                        image: likedUser.image
+                    })
+                }
             }
         }
         res.status(200).json({success: true, user: currentUser})
@@ -40,18 +65,6 @@ export const swipeLeft = async (req, res)  => {
         res.status(500).json({message: "Internal server error"})
     }
 }
-
-// export const getMatches = async (req, res)  => {
-//     try {
-//         const user = User.findById(req.user.id).populate("matches", "name image")
-
-//         res.status(200).json({success: true, matches: user.matches})
-//     } catch (error) {
-//         console.log("Error in getMatches controller: ", error)
-//         res.status(500).json({message: "Internal server error"})
-//     }
-   
-// }
 
 export const getMatches = async (req, res) => {
 	try {

@@ -5,17 +5,25 @@ import { useMatchStore } from "../store/useMatchStore";
 import { Frown } from "lucide-react";
 import SwipeArea from "../components/SwipeArea";
 import SwipeFeedback from "../components/SwipeFeedback";
+import { useAuthStore } from "../store/useAuthStore";
 
 
 const HomePage = () => {
 
-  const { isLoadingUserProfiles, userProfiles, getUserProfiles } = useMatchStore();
+  const { isLoadingUserProfiles, userProfiles, getUserProfiles, subscribeToNewMatches, unsubscribeToNewMatches } = useMatchStore();
+
+  const {authUser} = useAuthStore()
 
   useEffect(() => {
     getUserProfiles();
   }, [getUserProfiles])
 
-  console.log(userProfiles)
+  useEffect(() => {
+    authUser && subscribeToNewMatches();
+    // return () => {
+    //   unsubscribeToNewMatches();
+    // }
+  }, [subscribeToNewMatches, unsubscribeToNewMatches, authUser])
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen

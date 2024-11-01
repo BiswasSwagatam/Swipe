@@ -110,7 +110,7 @@ const SignUpForm = () => {
 							type='checkbox'
 							checked={gender === "male"}
 							onChange={() => setGender("male")}
-							className='h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded'
+							className='h-4 w-4 bg-white text-pink-600 focus:ring-pink-500 border-gray-300 rounded'
 						/>
 						<label htmlFor='male' className='ml-2 block text-sm text-gray-900'>
 							Male
