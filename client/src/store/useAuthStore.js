@@ -61,5 +61,7 @@ export const useAuthStore = create((set) => ({
         } finally {
             set({ checkingAuth: false })
         }
-    }
+    },
+
+    setAuthUser: (user) => set({ authUser: user }),
 }))
